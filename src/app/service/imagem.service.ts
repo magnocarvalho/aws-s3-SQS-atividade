@@ -19,7 +19,8 @@ export class ImagemService {
       secretAccessKey: environment.secretAccessKey
     }
   };
-  public mensagems: any = [];
+  public mensagems: SQS.Message[] = [];
+
   constructor() {
     AWS.config.update({
       region: "ohio",
@@ -46,7 +47,7 @@ export class ImagemService {
       ContentType: contentType
     };
     return new Observable((res) => {
-      bucket.upload(params, function(err, data) {
+      bucket.upload(params, (err, data) => {
         if (err) {
           console.log("There was an error uploading your file: ", err);
           res.error(err);
@@ -60,11 +61,12 @@ export class ImagemService {
             QueueUrl:
               "https://sqs.us-east-2.amazonaws.com/791245121628/magno-test"
           };
-          sqs.sendMessage(params, function(err, data) {
+          sqs.sendMessage(params, (err, data) => {
             if (err) {
               console.log("Error", err);
             } else {
-              this.mensagems = data;
+              // this.mensagems = data;
+              this.listaMensagem();
               console.log("Success", data);
             }
           });
@@ -87,12 +89,25 @@ export class ImagemService {
       WaitTimeSeconds: 0
     };
     var sqs = new SQS(this.sqs);
-    sqs.receiveMessage(params, function(err, data) {
+    sqs.receiveMessage(params, (err, data) => {
       if (err) {
         console.log("Error", err);
-      } else {
+      } else if (data.Messages.length > 0) {
         this.mensagems = data.Messages;
+        console.log(data.Messages);
         console.log("Success", data);
+
+        var deleteParams = {
+          QueueUrl: queueURL,
+          ReceiptHandle: data.Messages[0].ReceiptHandle
+        };
+        sqs.deleteMessage(deleteParams, (err, datas) => {
+          if (err) {
+            console.log("Delete Error", err);
+          } else {
+            console.log("Message Deleted", datas);
+          }
+        });
       }
     });
   }
