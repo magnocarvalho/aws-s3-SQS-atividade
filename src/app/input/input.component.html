@@ -1,46 +1,60 @@
-<div>
-  <mat-card>
-    <mat-card-header>
-      <img matCardAvatar src="assets/insert_photo.png" />
-      <mat-card-title> Bem vindo página web que fazer o upload</mat-card-title>
-      <mat-card-subtitle>Magno Carvalho</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <div fxLayout="column wrap">
-        <label class="image-upload-container btn btn-bwm">
-          <mat-label>Upload</mat-label>
-          <input
-            #imageInput
-            type="file"
-            accept="image/*"
-            (change)="processFile(imageInput)"
-          />
-        </label>
-
-        <div *ngIf="selectedFile" class="img-preview-container">
-          <div
-            class="img-preview{{
-              selectedFile.status === 'fail' ? '-error' : ''
-            }}"
-            [ngStyle]="{ 'background-image': 'url(' + selectedFile.src + ')' }"
-          ></div>
-
-          <div *ngIf="selectedFile.pending" class="img-loading-overlay">
-            <div class="img-spinning-circle"></div>
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  fxLayoutGap=""
+  fxFlex="100"
+  style="min-height: 300px; height: 300px;"
+>
+  <div style="max-width: 500px;">
+    <mat-card>
+      <mat-card-header>
+        <img matCardAvatar src="assets/insert_photo.png" />
+        <mat-card-title>
+          Bem vindo página web que fazer o upload</mat-card-title
+        >
+        <mat-card-subtitle>Magno Carvalho</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxLayout="column">
+          <div *ngIf="!selectedFile">
+            <label class="image-upload-container btn btn-bwm">
+              <mat-label>Selecione uma imagem</mat-label>
+              <input
+                #imageInput
+                type="file"
+                accept="image/*"
+                (change)="processFile(imageInput)"
+              />
+            </label>
           </div>
-
-          <div *ngIf="selectedFile.status === 'ok'" class="alert alert-success">
-            Image Uploaded Succesfuly!
-          </div>
-          <div
-            *ngIf="selectedFile.status === 'fail'"
-            class="alert alert-danger"
-          >
-            Image Upload Failed!
+          <div *ngIf="selectedFile" class="img-preview-container">
+            <div
+              class="img-preview{{
+                selectedFile.status === 'fail' ? '-error' : ''
+              }}"
+              [ngStyle]="{
+                'background-image': 'url(' + selectedFile.src + ')'
+              }"
+            ></div>
+            <div *ngIf="selectedFile.pending" class="img-loading-overlay">
+              <div class="img-spinning-circle"></div>
+            </div>
+            <div
+              *ngIf="selectedFile.status === 'ok'"
+              class="alert alert-success"
+            >
+              Image Uploaded Succesfuly!
+            </div>
+            <div
+              *ngIf="selectedFile.status === 'fail'"
+              class="alert alert-danger"
+            >
+              Image Upload Failed!
+            </div>
           </div>
         </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="start"> </mat-card-actions>
-  </mat-card>
+      </mat-card-content>
+      <mat-card-actions align="start"> </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

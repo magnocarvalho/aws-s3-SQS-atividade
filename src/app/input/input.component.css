@@ -7,8 +7,10 @@ input {
 }
 
 .img-preview-container {
-  background-color: #4e086e;
+  background-color: hsl(281, 53%, 87%);
   position: relative;
+  color: black;
+  padding: 20px;
 }
 .img-preview-container .img-preview {
   background: center center no-repeat;
@@ -51,6 +53,11 @@ input {
   border-color: #fff transparent #fff transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+.image-upload-container {
+  border: #4e086e solid 1px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
 
 @keyframes lds-dual-ring {
   0% {
@@ -62,9 +69,9 @@ input {
 }
 
 .btn-bwm {
-  background-color: #4e086e;
+  background-color: white;
   border-color: "#5fe";
-  color: white;
+  color: "#111";
   padding: 15px 30px;
   font-size: 20px;
 }

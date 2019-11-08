@@ -40,7 +40,7 @@ export class InputComponent implements OnInit {
       this.selectedFile = new ImageSnippet(event.target.result, file);
 
       this.selectedFile.pending = true;
-      this.imageService.uploadImage(this.selectedFile.file).subscribe(
+      this.imageService.uploadFile(this.selectedFile.file).subscribe(
         (res) => {
           this.onSuccess();
         },
